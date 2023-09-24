@@ -24,15 +24,15 @@ public class TitleScreen extends Scene {
         super(root);
         playBtn = pressPlay;
 
-        playBtn.setText("ConvexSym Viewer");
+        playBtn.setText("Convex Symmetry Viewer");
 
-        //TODO better style than this
+        //TODO better style than this?
         playBtn.setStyle(
                 "-fx-padding: 10 10 10 10;\n" +
                 "-fx-base: #" + Utils.hex(Color.ALICEBLUE) + "; " +
                 "-fx-font-size: 2.4em;");
 
-        waterMark.setText("Flancrest Enterprises 2023");
+        waterMark.setText("By Kenneth Moore 2023");
         waterMark.setStyle("-fx-font-size: 14;"
                 + "-fx-background-color: #" + Utils.hex(Color.CADETBLUE));
         waterMark.setPadding(new Insets(5));

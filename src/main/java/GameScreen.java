@@ -3,6 +3,7 @@ import java.util.Random;
 
 import geometry.*;
 import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -36,11 +37,10 @@ public class GameScreen extends Scene {
 	final static VBox root = new VBox();
     final HBox mainhbox = new HBox();
 
-	private static final int WIDTH = 800;
-	private static final int HEIGHT = 800;
+	private static final int WIDTH = 750;
 	
 	public static final int DATAWID = 600;
-	public static final int DATAHIE = 350;
+	public static final int DATAHIE = 325;
 	
     final Color gridcol[] = { Color.RED, Color.BLUE, Color.RED, Color.BLUE };
     
@@ -81,8 +81,8 @@ public class GameScreen extends Scene {
     final Button minusbutton = new Button("-");
     
     final VBox outptbox = new VBox();
-    final ImageView outbg = renderColor(Color.WHITE, WIDTH, HEIGHT);
-    final ImageView clickspace = renderColor(Color.TRANSPARENT, WIDTH, HEIGHT);
+    final ImageView outbg = renderColor(Color.WHITE, WIDTH, WIDTH);
+    final ImageView clickspace = renderColor(Color.TRANSPARENT, WIDTH, WIDTH);
     
     final ImageView databg = renderColor(Color.WHITE, DATAWID, DATAHIE);
     final ImageView dataclickspace = renderColor(Color.TRANSPARENT, DATAWID, DATAHIE);
@@ -112,6 +112,8 @@ public class GameScreen extends Scene {
     
     public GameScreen() {
         super(root);
+        
+        
         
         mainhbox.getChildren().addAll(inputbox, outptbox);
         mainhbox.setPadding(new Insets(10));
@@ -508,7 +510,7 @@ public class GameScreen extends Scene {
     		if (valid.get(0) < 0) return;
     		
     		final double locx = event.getX() - (WIDTH/2);
-    		final double locy = event.getY() - (HEIGHT/2); 
+    		final double locy = event.getY() - (WIDTH/2); 
     		
     		ArrayList<Vector2> halfsies = convexGuy.getReps();
     		
@@ -540,7 +542,7 @@ public class GameScreen extends Scene {
     		clickspace.setOnMouseDragged(event2 -> {
     			
     			final double locx2 = event2.getX() - (WIDTH/2);
-        		final double locy2 = event2.getY() - (HEIGHT/2); 
+        		final double locy2 = event2.getY() - (WIDTH/2); 
     			
     			if (moveindfinal >= 0) {
         			convexGuy.replace(moveindfinal, Halfspace2.fromRep(
@@ -579,7 +581,7 @@ public class GameScreen extends Scene {
     	inputbox.setSpacing(10);
     	inputbox.getChildren().addAll(ultraHBox, outputbox, calcHBox, calcHBox2, datasuperduperstack);
     	
-    	outptbox.setPrefSize(WIDTH, HEIGHT);
+    	outptbox.setPrefSize(WIDTH, WIDTH);
     	outptbox.setSpacing(10);
     	   
     	superstack.getChildren().addAll(outbg, linestack, ballstack, clickspace);
@@ -598,12 +600,11 @@ public class GameScreen extends Scene {
     	
     	final ArrayList<Halfspace2> halfsies = new ArrayList<>();
     	
-    	// This is the best one:
-		halfsies.add(Halfspace2.fromRep(Vector2.create(1.4345046187914599, 24.04008620339733)));
-		halfsies.add(Halfspace2.fromRep(Vector2.create(4.8525831708806715, -59.77857328658926)));
-		halfsies.add(Halfspace2.fromRep(Vector2.create(-5.077758968029796, -24.36002619389314)));
-		halfsies.add(Halfspace2.fromRep(Vector2.create(316.49534766537084, -24.78860196145842)));
-		halfsies.add(Halfspace2.fromRep(Vector2.create(314.3778831482469, 24.53999093861307)));
+    	// This one is loaded to start:
+		halfsies.add(Halfspace2.fromRep(Vector2.create(1.9251725197532472, 19.78331399341686)));
+		halfsies.add(Halfspace2.fromRep(Vector2.create(0.485395950351331, -46.557334787897084)));
+		halfsies.add(Halfspace2.fromRep(Vector2.create(-5.056706497397157, -24.085061354606264)));
+		halfsies.add(Halfspace2.fromRep(Vector2.create(312.97017177145506, -13.054697984384223)));		
 		
 		convexGuy.refill(halfsies);
 		
@@ -805,7 +806,7 @@ public class GameScreen extends Scene {
 				
 				for (int i=0; i < iters4; i++) {
 					
-					// I want the step to start at 0.5, and drop LINEARLY to 0.
+					// I want the step to start at 0.5, and drop LINEARLY? to 0.
 					step = 0.5 * (1 - (i/iters4));
 					
 					this.updateProgress(i, iters4);
@@ -894,10 +895,10 @@ public class GameScreen extends Scene {
 		            	});
 		            	System.out.println(msg);
 		            	
-		            	if (i % 100 < 50) {
+		            	//if (i % 100 < 50) {
 		            		//we don't want to do too many additional allrandos, let's just move on
-		            		break;
-		            	}
+		            	//	break;
+		            	//}
 		    		}
 		    	}
 		    	gaussian(BESTS, true, iters1, iters2, iters3);
@@ -1532,7 +1533,7 @@ public class GameScreen extends Scene {
     	ballstack.getChildren().get(0).setTranslateX(0);
 		ballstack.getChildren().get(0).setTranslateY(0);
 		
-		final Line refline = new Line(700 * -direction.y, 700 * direction.x, 0, 0) ;
+		final Line refline = new Line((WIDTH-100) * -direction.y, (WIDTH-100) * direction.x, 0, 0) ;
 		refline.setStroke(Color.DARKCYAN);
 		linestack.getChildren().add(0, refline);
 		linestack.getChildren().get(0).setTranslateX(direction.x * translate);
@@ -1580,7 +1581,7 @@ public class GameScreen extends Scene {
     		// we don't need the control points for the non-OG convex set
     		if (opacity < 1) continue;
     		
-       		if (vect.x > HEIGHT/2 || vect.x < -HEIGHT/2 || vect.y > HEIGHT/2 || vect.y  < -HEIGHT/2 ) continue;
+       		if (vect.x > WIDTH/2 || vect.x < -WIDTH/2 || vect.y > WIDTH/2 || vect.y  < -WIDTH/2 ) continue;
     		
     		final Circle circ = new Circle();
     		circ.setRadius(4);
@@ -1594,7 +1595,7 @@ public class GameScreen extends Scene {
     	
     	for (Vector2 vect : drawme.getvertices()) {
 
-    		if (vect.x > HEIGHT/2 || vect.x < -HEIGHT/2 || vect.y > HEIGHT/2 || vect.y  < -HEIGHT/2 ) continue;
+    		if (vect.x > WIDTH/2 || vect.x < -WIDTH/2 || vect.y > WIDTH/2 || vect.y  < -WIDTH/2 ) continue;
     		
     		final Circle circ = new Circle();
     		circ.setRadius(4);
@@ -1708,13 +1709,16 @@ public class GameScreen extends Scene {
 
     	if (n > 30000 || n < 5) return;
     	
-    	final int ind = (int) Math.round( (x * n)/DATAWID );
+    	final int ind = (int) Math.round( (x * n) / DATAWID );
     	
-    	if (ind == n && justprint) outputbox.setText("Symmetry in this direction: " + 
-    		           Data.get(0).x/vol   + " (translate: " + -Data.get(0).y   + ")");
-		else if (justprint)        outputbox.setText("Symmetry in this direction: " + 
-    		           Data.get(ind).x/vol + " (translate: " + -Data.get(ind).y + ")");
-    	
+    	try {
+	    	if (ind == n && justprint) outputbox.setText("Symmetry in this direction: " + 
+	    		           Data.get(0).x/vol   + " (translate: " + -Data.get(0).y   + ")");
+			else if (justprint)        outputbox.setText("Symmetry in this direction: " + 
+	    		           Data.get(ind).x/vol + " (translate: " + -Data.get(ind).y + ")");
+    	} catch (IndexOutOfBoundsException e) {
+    		return;
+    	}
     	final Line holine = new Line(0,0,0,DATAHIE-1);
     	holine.setStroke(Color.GREY);
 		datalinestack.getChildren().add(0, holine);
@@ -1728,7 +1732,8 @@ public class GameScreen extends Scene {
 		if (ind == n) datum = Vector2.create(Data.get(0).x, -Data.get(0).y);
 		else          datum = Data.get(ind);
 		
-		final Line refline = new Line(700 * -tempdir.y, 700 * tempdir.x, 0, 0);
+		//TODO
+		final Line refline = new Line((WIDTH-100) * -tempdir.y, (WIDTH-100) * tempdir.x, 0, 0);
 		refline.setStroke(Color.DARKRED);
 		linestack.getChildren().add(0, refline);
 		linestack.getChildren().get(0).setTranslateX(tempdir.x * datum.y);

@@ -17,9 +17,9 @@ public class Axiality extends Application {
         butt.setOnAction(event -> primaryStage.setScene(gamescreen));
         
         primaryStage.setScene(titleScene);
-        primaryStage.setTitle("ConvexSym Viewer");
-        primaryStage.setHeight(850);
-        primaryStage.setWidth(1490);
+        primaryStage.setTitle("Convex Symmetry Viewer");
+        primaryStage.setHeight(800);
+        primaryStage.setWidth(1440);
         primaryStage.show();
     }
 
